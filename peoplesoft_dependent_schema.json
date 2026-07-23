@@ -1,0 +1,486 @@
+{
+  "source": "PeopleSoft Database Extractor",
+  "extracted_at": "2026-07-23T07:45:00.000000",
+  "db_dialect": "oracle",
+  "records": [
+    {
+      "recname": "PERSONAL_DATA",
+      "recdesc": "Personal Data Table",
+      "parentrecord": "",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "NAME",
+          "fieldnum": 2,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 50,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "SEX",
+          "fieldnum": 3,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "BIRTHDATE",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "MAR_STATUS",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "DEP_BEN",
+      "recdesc": "Dependent and Beneficiary Table",
+      "parentrecord": "PERSONAL_DATA",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEPENDENT_BENEF",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 2,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "BIRTHDATE",
+          "fieldnum": 3,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "SEX",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "MAR_STATUS",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "FT_STUDENT",
+          "fieldnum": 6,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DISABLED",
+          "fieldnum": 7,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "SMOKER",
+          "fieldnum": 8,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "COUNTRY",
+          "fieldnum": 9,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "COUNTRY_TBL",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "STATE",
+          "fieldnum": 10,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "STATE_TBL",
+          "fieldtype": "Char",
+          "length": 6,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "DEP_BEN_EFF",
+      "recdesc": "Dependent/Beneficiary Effective Table",
+      "parentrecord": "DEP_BEN",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEPENDENT_BENEF",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 2,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFDT",
+          "fieldnum": 3,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "RELATIONSHIP",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 2,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEP_BENEF_TYPE",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFF_STATUS",
+          "fieldnum": 6,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "DEP_BENEF_NME",
+      "recdesc": "Dependent/Beneficiary Names Table",
+      "parentrecord": "DEP_BEN",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEPENDENT_BENEF",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 2,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFDT",
+          "fieldnum": 3,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "NAME_TYPE",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "FIRST_NAME",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "LAST_NAME",
+          "fieldnum": 6,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "NAME",
+          "fieldnum": 7,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 50,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "DEP_BENEF_ADDR",
+      "recdesc": "Dependent/Beneficiary Address Table",
+      "parentrecord": "DEP_BEN",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEPENDENT_BENEF",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 2,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFDT",
+          "fieldnum": 3,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "ADDRESS_TYPE",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "COUNTRY",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "COUNTRY_TBL",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "ADDRESS1",
+          "fieldnum": 6,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 55,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "ADDRESS2",
+          "fieldnum": 7,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 55,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "CITY",
+          "fieldnum": 8,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "STATE",
+          "fieldnum": 9,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "STATE_TBL",
+          "fieldtype": "Char",
+          "length": 6,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "POSTAL",
+          "fieldnum": 10,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 12,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "COUNTRY_TBL",
+      "recdesc": "Country Master Table",
+      "parentrecord": "",
+      "fields": [
+        {
+          "fieldname": "COUNTRY",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DESCR",
+          "fieldnum": 2,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "STATE_TBL",
+      "recdesc": "State/Province Master Table",
+      "parentrecord": "",
+      "fields": [
+        {
+          "fieldname": "COUNTRY",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "COUNTRY_TBL",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "STATE",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 6,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DESCR",
+          "fieldnum": 3,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        }
+      ]
+    }
+  ]
+}
