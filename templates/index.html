@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeopleSoft Database ERD Explorer</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Style Link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i data-lucide="database" class="logo-icon"></i>
+                <div class="logo-text">
+                    <h1>PeopleSoft ERD Explorer</h1>
+                    <p>Interactive Entity Relationship Diagram & Schema Metadata Visualizer</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="db-status-badge" id="dbStatusBadge">
+                    <span class="status-indicator warning"></span>
+                    <span id="dbStatusText">Checking connection...</span>
+                </div>
+                <!-- File Input for JSON Metadata Upload (Hidden) -->
+                <input type="file" id="uploadJsonInput" accept=".json" style="display: none;">
+                <button class="btn btn-secondary btn-icon" id="uploadJsonBtn" title="Upload Schema JSON">
+                    <i data-lucide="upload"></i>
+                    <span>Upload JSON</span>
+                </button>
+                <button class="btn btn-secondary btn-icon" id="openSettingsBtn" title="Database Connection Settings">
+                    <i data-lucide="settings"></i>
+                    <span>Database Connection</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="app-body">
+            <!-- Left Sidebar: Controls & Record Search -->
+            <aside class="sidebar sidebar-left">
+                <!-- Search & Filters -->
+                <div class="sidebar-section">
+                    <h3 class="section-title"><i data-lucide="search"></i> Find PeopleSoft Tables</h3>
+                    <div class="search-box">
+                        <input type="text" id="recordSearchInput" placeholder="Search records (e.g. JOB, PERSONAL)..." autocomplete="off">
+                        <i data-lucide="search" class="search-input-icon"></i>
+                        <button class="clear-search-btn" id="clearSearchBtn" style="display:none;"><i data-lucide="x"></i></button>
+                    </div>
+                    <div class="search-results-dropdown" id="searchResultsDropdown" style="display:none;">
+                        <!-- Populate dynamically -->
+                    </div>
+                </div>
+
+                <!-- Active Workspace Tables -->
+                <div class="sidebar-section workspace-section">
+                    <div class="section-header">
+                        <h3 class="section-title"><i data-lucide="layers"></i> Active Tables</h3>
+                        <button class="btn-clear" id="clearWorkspaceBtn" title="Clear all tables">Clear Workspace</button>
+                    </div>
+                    <div class="active-tables-container">
+                        <ul class="active-tables-list" id="activeTablesList">
+                            <!-- Populate dynamically -->
+                            <li class="empty-list-msg">No tables added yet. Search and add tables from above.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Graph Depth Controls -->
+                <div class="sidebar-section">
+                    <h3 class="section-title"><i data-lucide="git-branch"></i> Relationship Expansion</h3>
+                    <div class="form-group row">
+                        <label for="relationDepth">Lookup Depth:</label>
+                        <select id="relationDepth" class="form-control">
+                            <option value="1">1st Degree (Direct)</option>
+                            <option value="2">2nd Degree</option>
+                            <option value="3">3rd Degree</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="expandRelationsBtn">
+                        <i data-lucide="expand"></i>
+                        <span>Fetch Related Tables</span>
+                    </button>
+                </div>
+
+                <!-- Export & Saving Actions -->
+                <div class="sidebar-section action-section">
+                    <h3 class="section-title"><i data-lucide="download"></i> Actions</h3>
+                    <div class="btn-grid">
+                        <button class="btn btn-secondary" id="exportPngBtn" title="Export as Image (PNG)">
+                            <i data-lucide="image"></i> PNG
+                        </button>
+                        <button class="btn btn-secondary" id="exportSvgBtn" title="Export as Vector (SVG)">
+                            <i data-lucide="file-type-2"></i> SVG
+                        </button>
+                        <button class="btn btn-secondary" id="exportSqlBtn" title="Generate SQL DDL Schema">
+                            <i data-lucide="file-text"></i> SQL DDL
+                        </button>
+                        <button class="btn btn-secondary" id="saveWorkspaceBtn" title="Save layout configuration to file">
+                            <i data-lucide="save"></i> Save Workspace
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary btn-block" id="sidebarUploadJsonBtn" title="Upload Schema JSON" style="margin-top:10px;">
+                        <i data-lucide="upload"></i> Upload JSON File
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Center Panel: Graph Workspace -->
+            <section class="canvas-panel" id="canvasPanel">
+                <!-- Drag and Drop Overlay -->
+                <div class="drag-overlay" id="dragOverlay" style="display: none;">
+                    <div class="drag-overlay-content">
+                        <i data-lucide="file-up" class="drag-icon"></i>
+                        <h3>Drop PeopleSoft JSON here</h3>
+                        <p>Drop the schema JSON file generated from the database server to visualize the ERD instantly.</p>
+                    </div>
+                </div>
+                <!-- Floating Toolbar -->
+                <div class="canvas-toolbar">
+                    <button class="toolbar-btn" id="zoomInBtn" title="Zoom In"><i data-lucide="zoom-in"></i></button>
+                    <button class="toolbar-btn" id="zoomOutBtn" title="Zoom Out"><i data-lucide="zoom-out"></i></button>
+                    <button class="toolbar-btn" id="zoomFitBtn" title="Fit Entire Diagram"><i data-lucide="maximize-2"></i></button>
+                    <div class="toolbar-divider"></div>
+                    <span class="toolbar-label">Layout:</span>
+                    <button class="toolbar-btn active" id="layoutDagreBtn" title="Hierarchical Flow (Dagre)"><i data-lucide="git-merge"></i></button>
+                    <button class="toolbar-btn" id="layoutCoseBtn" title="Force Directed Layout"><i data-lucide="network"></i></button>
+                    <button class="toolbar-btn" id="layoutGridBtn" title="Simple Grid Layout"><i data-lucide="grid"></i></button>
+                </div>
+
+                <!-- Cytoscape Graph Canvas -->
+                <div id="cy" class="cy-canvas"></div>
+
+                <!-- Graph Legend -->
+                <div class="canvas-legend">
+                    <div class="legend-item"><span class="legend-color parent-child-line"></span><span>Parent-Child</span></div>
+                    <div class="legend-item"><span class="legend-color prompt-table-line"></span><span>Prompt Table</span></div>
+                    <div class="legend-item"><span class="legend-color key-join-line"></span><span>Key Join (Shared Fields)</span></div>
+                    <div class="legend-item"><span class="legend-key-icon">PK</span><span>Primary Key</span></div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Selected Table Details -->
+            <aside class="sidebar sidebar-right" id="rightSidebar">
+                <div class="sidebar-header">
+                    <h3 class="section-title"><i data-lucide="info"></i> Table Metadata</h3>
+                    <button class="close-sidebar-btn" id="closeRightSidebarBtn"><i data-lucide="x"></i></button>
+                </div>
+                <div class="sidebar-details-content" id="tableDetailsContent">
+                    <div class="empty-details-msg">
+                        <i data-lucide="mouse-pointer" class="pointer-icon animate-pulse"></i>
+                        <p>Click on any table in the diagram to inspect its schema details and fields.</p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Connection Setup Modal -->
+    <div class="modal-overlay" id="settingsModal" style="display:none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Database Connection Wizard</h2>
+                <button class="modal-close" id="closeSettingsModalBtn"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="dbConnectForm">
+                    <div class="form-group">
+                        <label for="dbTypeSelect">Database System Type</label>
+                        <select id="dbTypeSelect" class="form-control">
+                            <option value="sqlite_mock">SQLite Mock Database (Offline Testing)</option>
+                            <option value="oracle">Oracle Database (PeopleSoft default)</option>
+                            <option value="mssql">Microsoft SQL Server</option>
+                            <option value="postgresql">PostgreSQL</option>
+                        </select>
+                    </div>
+
+                    <!-- DB Parameter Fields (Hidden for SQLite Mock) -->
+                    <div id="dbParamsContainer" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group col-8">
+                                <label for="dbHost">Host Address / Hostname</label>
+                                <input type="text" id="dbHost" class="form-control" placeholder="127.0.0.1">
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="dbPort">Port</label>
+                                <input type="number" id="dbPort" class="form-control" placeholder="1521">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dbName">Database Name / SID / Service Name</label>
+                            <input type="text" id="dbName" class="form-control" placeholder="ORCL">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="dbUser">Username</label>
+                                <input type="text" id="dbUser" class="form-control" placeholder="SYSADM">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="dbPassword">Password</label>
+                                <input type="password" id="dbPassword" class="form-control" placeholder="••••••••">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dbSchema">Schema Name (Optional)</label>
+                            <input type="text" id="dbSchema" class="form-control" placeholder="SYSADM">
+                        </div>
+
+                        <div class="form-divider">OR</div>
+
+                        <div class="form-group">
+                            <label for="dbConnectionString">Custom Connection String / DSN URI (Overrides parameters above)</label>
+                            <textarea id="dbConnectionString" class="form-control" rows="2" placeholder="oracle+oracledb://SYSADM:pwd@host:port/?service_name=ORCL"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="connectionErrorMsg" class="alert alert-danger" style="display:none;"></div>
+                    <div id="connectionSuccessMsg" class="alert alert-success" style="display:none;"></div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelSettingsBtn">Batal</button>
+                        <button type="submit" class="btn btn-primary" id="saveConnectionBtn">Connect & Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SQL Export Modal -->
+    <div class="modal-overlay" id="sqlModal" style="display:none;">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h2>Generated SQL DDL Script</h2>
+                <button class="modal-close" id="closeSqlModalBtn"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">This matches standard DDL commands based on definitions inside PeopleSoft meta-tables.</p>
+                <div class="code-container">
+                    <pre><code id="sqlCodeContent"></code></pre>
+                    <button class="copy-code-btn" id="copySqlBtn" title="Copy to Clipboard">
+                        <i data-lucide="copy"></i> Copy
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="closeSqlBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Cytoscape Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.29.2/cytoscape.min.js"></script>
+    <!-- Dagre Layout dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+    <!-- App Logic Link -->
+    <script src="{{ url_for('static', filename='js/erd.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+{
+  "source": "PeopleSoft Database Extractor",
+  "extracted_at": "2026-07-22T22:23:54.752021",
+  "db_dialect": "sqlite",
+  "records": [
+    {
+      "recname": "JOB",
+      "recdesc": "Employee Job History Table",
+      "parentrecord": "PERSONAL_DATA",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EMPL_RCD",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Number",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFDT",
+          "fieldnum": 3,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFSEQ",
+          "fieldnum": 4,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Number",
+          "length": 3,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DEPTID",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "DEPT_TBL",
+          "fieldtype": "Char",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "JOBCODE",
+          "fieldnum": 6,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "JOBCODE_TBL",
+          "fieldtype": "Char",
+          "length": 6,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "LOCATION",
+          "fieldnum": 7,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "LOCATION_TBL",
+          "fieldtype": "Char",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "SUPERVISOR_ID",
+          "fieldnum": 8,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "PERSONAL_DATA",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "HR_STATUS",
+          "fieldnum": 9,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "ACTION",
+          "fieldnum": 10,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 3,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "JOBCODE_TBL",
+      "recdesc": "Job Code Master Table",
+      "parentrecord": "",
+      "fields": [
+        {
+          "fieldname": "SETID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 5,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "JOBCODE",
+          "fieldnum": 2,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 6,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFFDT",
+          "fieldnum": 3,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "EFF_STATUS",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "DESCR",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 30,
+          "decimalpos": 0
+        }
+      ]
+    },
+    {
+      "recname": "PERSONAL_DATA",
+      "recdesc": "Personal Data Table",
+      "parentrecord": "",
+      "fields": [
+        {
+          "fieldname": "EMPLID",
+          "fieldnum": 1,
+          "is_key": true,
+          "useedit": 1,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 11,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "NAME",
+          "fieldnum": 2,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 50,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "SEX",
+          "fieldnum": 3,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "BIRTHDATE",
+          "fieldnum": 4,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Date",
+          "length": 10,
+          "decimalpos": 0
+        },
+        {
+          "fieldname": "MAR_STATUS",
+          "fieldnum": 5,
+          "is_key": false,
+          "useedit": 0,
+          "edittable": "",
+          "fieldtype": "Char",
+          "length": 1,
+          "decimalpos": 0
+        }
+      ]
+    }
+  ]
+}
