@@ -119,7 +119,7 @@ class PSExtractor:
         # Query to fetch record names
         # RECTYPE = 0 means SQL Tables
         sql = """
-            SELECT RECNAME, RECDESC, PARENTRECORD, RECTYPE 
+            SELECT RECNAME, RECDESCR, PARENTRECNAME, RECTYPE 
             FROM PSRECDEFN 
             WHERE RECTYPE = 0 AND RECNAME LIKE :search 
             ORDER BY RECNAME ASC
